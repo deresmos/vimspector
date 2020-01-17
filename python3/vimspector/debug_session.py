@@ -271,7 +271,6 @@ class DebugSession( object ):
       return fct(self, *args, **kwargs)
     return wrapper
 
-  @IfConnected
   def OnChannelData( self, data ):
     self._connection.OnData( data )
 
@@ -282,7 +281,6 @@ class DebugSession( object ):
       self._outputView.Print( 'server', data )
 
 
-  @IfConnected
   def OnRequestTimeout( self, timer_id ):
     self._connection.OnRequestTimeout( timer_id )
 
@@ -368,20 +366,25 @@ class DebugSession( object ):
   def Pause( self ):
     self._stackTraceView.Pause()
 
+  @IfConnected
   def ExpandVariable( self ):
     self._variablesView.ExpandVariable()
 
+  @IfConnected
   def AddWatch( self, expression ):
     self._variablesView.AddWatch( self._stackTraceView.GetCurrentFrame(),
                                   expression )
 
+  @IfConnected
   def EvaluateConsole( self, expression ):
     self._outputView.Evaluate( self._stackTraceView.GetCurrentFrame(),
                                expression )
 
+  @IfConnected
   def DeleteWatch( self ):
     self._variablesView.DeleteWatch()
 
+  @IfConnected
   def ShowBalloon( self, winnr, expression ):
     """Proxy: ballonexpr -> variables.ShowBallon"""
     frame = self._stackTraceView.GetCurrentFrame()
@@ -400,6 +403,7 @@ class DebugSession( object ):
     # Return variable aware function
     return self._variablesView.ShowBalloon( frame, expression )
 
+  @IfConnected
   def ExpandFrameOrThread( self ):
     self._stackTraceView.ExpandFrameOrThread()
 
