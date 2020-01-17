@@ -449,3 +449,10 @@ def ToUnicode( b ):
   if isinstance( b, bytes ):
     return b.decode( 'utf-8' )
   return b
+
+
+def GetBufferFiletypes( buf ):
+  ft = ToUnicode( vim.eval( f"getbufvar( {buf.number}, '&ft' )" ) )
+  return ft.split( '.' )
+
+
